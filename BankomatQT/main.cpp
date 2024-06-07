@@ -1,5 +1,8 @@
 #include "interface.h"
 #include <QtWidgets/QApplication>
+#include <stdio.h>
+#include <sqlite3.h>
+
 
 int main(int argc, char *argv[])
 {
