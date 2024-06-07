@@ -4,20 +4,24 @@
 
 Interface::Interface(QWidget* parent) : QWidget(parent) {
     setupUI();
+    resize(300, 200);
 }
 
 void Interface::setupUI() {
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
+    // Elementy logowania
+    cardNumberLabel = new QLabel("Card Number:", this);
     cardNumberInput = new QLineEdit(this);
+    pinLabel = new QLabel("PIN:", this);
     pinInput = new QLineEdit(this);
     pinInput->setEchoMode(QLineEdit::Password);
-    QPushButton* loginButton = new QPushButton("Login", this);
+    loginButton = new QPushButton("Login", this);
     statusLabel = new QLabel(this);
 
-    mainLayout->addWidget(new QLabel("Card Number:", this));
+    mainLayout->addWidget(cardNumberLabel);
     mainLayout->addWidget(cardNumberInput);
-    mainLayout->addWidget(new QLabel("PIN:", this));
+    mainLayout->addWidget(pinLabel);
     mainLayout->addWidget(pinInput);
     mainLayout->addWidget(loginButton);
     mainLayout->addWidget(statusLabel);
@@ -28,25 +32,29 @@ void Interface::setupUI() {
     checkBalanceButton = new QPushButton("Check Balance", this);
     withdrawButton = new QPushButton("Withdraw", this);
     withdrawAmountInput = new QLineEdit(this);
+    withdrawAmountLabel = new QLabel("Withdraw Amount:", this);  // Przypisanie wskaŸnika
     depositButton = new QPushButton("Deposit", this);
     depositAmountInput = new QLineEdit(this);
+    depositAmountLabel = new QLabel("Deposit Amount:", this);    // Przypisanie wskaŸnika
     changePinButton = new QPushButton("Change PIN", this);
     oldPinInput = new QLineEdit(this);
     oldPinInput->setEchoMode(QLineEdit::Password);
+    oldPinLabel = new QLabel("Old PIN:", this);  // Przypisanie wskaŸnika
     newPinInput = new QLineEdit(this);
     newPinInput->setEchoMode(QLineEdit::Password);
+    newPinLabel = new QLabel("New PIN:", this);  // Przypisanie wskaŸnika
     logoutButton = new QPushButton("Logout", this);
 
     mainLayout->addWidget(checkBalanceButton);
-    mainLayout->addWidget(new QLabel("Withdraw Amount:", this));
+    mainLayout->addWidget(withdrawAmountLabel);
     mainLayout->addWidget(withdrawAmountInput);
     mainLayout->addWidget(withdrawButton);
-    mainLayout->addWidget(new QLabel("Deposit Amount:", this));
+    mainLayout->addWidget(depositAmountLabel);
     mainLayout->addWidget(depositAmountInput);
     mainLayout->addWidget(depositButton);
-    mainLayout->addWidget(new QLabel("Old PIN:", this));
+    mainLayout->addWidget(oldPinLabel);
     mainLayout->addWidget(oldPinInput);
-    mainLayout->addWidget(new QLabel("New PIN:", this));
+    mainLayout->addWidget(newPinLabel);
     mainLayout->addWidget(newPinInput);
     mainLayout->addWidget(changePinButton);
     mainLayout->addWidget(logoutButton);
@@ -59,14 +67,18 @@ void Interface::setupUI() {
 
     setLayout(mainLayout);
 
-    // Pocz¹tkowo ukryj przyciski interfejsu dla zalogowanych u¿ytkowników
+    // Pocz¹tkowo ukryj przyciski i etykiety interfejsu dla zalogowanych u¿ytkowników
     checkBalanceButton->hide();
     withdrawButton->hide();
+    withdrawAmountLabel->hide();
     withdrawAmountInput->hide();
     depositButton->hide();
+    depositAmountLabel->hide();
     depositAmountInput->hide();
     changePinButton->hide();
+    oldPinLabel->hide();
     oldPinInput->hide();
+    newPinLabel->hide();
     newPinInput->hide();
     logoutButton->hide();
 }
@@ -84,17 +96,26 @@ void Interface::onLoginClicked() {
 }
 
 void Interface::showMainMenu() {
+    // Ukryj elementy logowania
+    cardNumberLabel->hide();
     cardNumberInput->hide();
+    pinLabel->hide();
     pinInput->hide();
+    loginButton->hide();
 
+    // Poka¿ elementy g³ównego menu
     checkBalanceButton->show();
     withdrawButton->show();
     withdrawAmountInput->show();
+    withdrawAmountLabel->show();
     depositButton->show();
     depositAmountInput->show();
+    depositAmountLabel->show();
     changePinButton->show();
     oldPinInput->show();
+    oldPinLabel->show();
     newPinInput->show();
+    newPinLabel->show();
     logoutButton->show();
 }
 
@@ -141,16 +162,28 @@ void Interface::onLogoutClicked() {
     clearInputs();
     statusLabel->setText("Logged out.");
 
-    cardNumberInput->show();
-    pinInput->show();
-
+    // Ukryj elementy g³ównego menu
     checkBalanceButton->hide();
     withdrawButton->hide();
     withdrawAmountInput->hide();
+    withdrawAmountLabel->hide();
     depositButton->hide();
     depositAmountInput->hide();
+    depositAmountLabel->hide();
     changePinButton->hide();
     oldPinInput->hide();
+    oldPinLabel->hide();
     newPinInput->hide();
+    newPinLabel->hide();
     logoutButton->hide();
+
+    // Poka¿ elementy logowania
+    cardNumberLabel->show();
+    cardNumberInput->show();
+    pinLabel->show();
+    pinInput->show();
+    // Pokaz przycisk logowania
+    loginButton->show();
+    // Ustaw rozmiar okna na wyjœciowy, mniejszy rozmiar
+    resize(300, 200);
 }
